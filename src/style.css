@@ -3,3 +3,56 @@ body {
   font-family: sans-serif;
   background-color: #f1f5f9;
 }
+
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 220px;
+  background: #ffffff;
+  padding: 20px;
+  border-right: 1px solid #e2e8f0;
+}
+
+.sidebar button {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: none;
+  background: #e2e8f0;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+/* Main */
+.main {
+  flex: 1;
+  padding: 20px;
+}
+
+.columns {
+  display: flex;
+  gap: 20px;
+}
+
+.columns > div {
+  flex: 1;
+  background: #ffffff;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+/* Cards */
+.card {
+  background: #f8fafc;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
