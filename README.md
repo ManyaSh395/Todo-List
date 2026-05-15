@@ -69,15 +69,19 @@ Local Storage API
 git clone git@github.com:ManyaSh395/Todo-List.git
 
 cd Todo-List
+
 2. Install Dependencies: 
 
 npm install
+
 3. Start Development Server: 
 
 npm run start
+
 4. Open in Browser: 
 
 http://localhost:8080/
+
 5. Build for Production:
 
 npm run build
