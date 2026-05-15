@@ -30,7 +30,7 @@ function renderSidebar() {
     const sidebar = document.createElement("div");
     sidebar.classList.add("sidebar");
 
-    const project = getProjects();
+    const projects = getProjects();
 
     projects.forEach(p => {
         const btn = document.createElement("button");
@@ -63,9 +63,16 @@ function renderMain() {
 
     const project = getCurrentProject();
 
+    if (!project) {
+        main.textContent = "No project selected";
+        return main;
+    }
+
     const title = document.createElement("h2");
     title.textContent = project.name;
     main.appendChild(title);
+    main.appendChild(renderColumns(project)); 
+    
     return main;
 }
 

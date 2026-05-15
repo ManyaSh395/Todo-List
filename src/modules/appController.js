@@ -6,19 +6,39 @@ let projects = [];
 let currentProjectId = null;
 
 function initApp() {
-    const stored = loadData();
-    if(stored.length > 0) {
-        projects = stored;
-    } else {
-        const defaultProject = new Project('Default');
-        projects.push(defaultProject);
-        currentProjectId = defaultProject.id;
-        saveData(projects);
-    }
+  const storedProjects = loadData();
 
-    if(!currentProjectId) {
-        currentProjectId = projects[0].id;
-    }
+  if (storedProjects.length > 0) {
+    projects = storedProjects.map((projectData) => {
+      const project = new Project(projectData.name);
+      project.id = projectData.id;
+
+      project.todos = projectData.todos.map((todoData) => {
+        const todo = new Todo(
+          todoData.title,
+          todoData.description,
+          todoData.dueDate,
+          todoData.priority
+        );
+
+        todo.id = todoData.id;
+        todo.completed = todoData.completed;
+
+        return todo;
+      });
+
+      return project;
+    });
+  } else {
+    const defaultProject = new Project("Default");
+    projects.push(defaultProject);
+    currentProjectId = defaultProject.id;
+    saveData(projects);
+  }
+
+  if (!currentProjectId && projects.length > 0) {
+    currentProjectId = projects[0].id;
+  }
 }
 
 function getProjects() {
@@ -39,8 +59,24 @@ function createProject(name) {
     saveData(projects);
 }
 
+function deleteProject(projectId) {
+  projects = projects.filter((project) => project.id !== projectId);
+
+  // Ensure at least one project exists
+  if (projects.length === 0) {
+    const defaultProject = new Project("Default");
+    projects.push(defaultProject);
+  }
+
+  currentProjectId = projects[0].id;
+  saveData(projects);
+}
+
 function createTodo(title, description, dueDate, priority) {
     const currentProject = getCurrentProject();
+
+    if (!currentProject) return;
+
     const newTodo = new Todo(title, description, dueDate, priority);
     currentProject.addTodo(newTodo);
     saveData(projects);
@@ -48,13 +84,22 @@ function createTodo(title, description, dueDate, priority) {
 
 function toggleTodo(todoId) {
     const currentProject = getCurrentProject();
+
+    if (!currentProject) return;
+
     const todo = currentProject.todos.find(t => t.id === todoId);
+    
+    if (!todo) return;
+    
     todo.toggleComplete();
     saveData(projects);
 }
 
 function deleteTodo(todoId) {
     const currentProject = getCurrentProject();
+
+    if (!currentProject) return;
+
     currentProject.deleteTodo(todoId);
     saveData(projects);
 }
@@ -67,5 +112,6 @@ export {
     createProject,
     createTodo,
     toggleTodo,
-    deleteTodo
+    deleteTodo,
+    deleteProject
 };
