@@ -6,7 +6,8 @@ import {
     createProject,
     createTodo,
     toggleTodo,
-    deleteTodo
+    deleteTodo,
+    updateTodo
 } from './appController.js';
 
 function renderApp() {
@@ -72,7 +73,7 @@ function renderMain() {
     title.textContent = project.name;
     main.appendChild(title);
     main.appendChild(renderColumns(project)); 
-    
+
     return main;
 }
 
@@ -97,12 +98,15 @@ function renderColumns(project) {
 
     const addBtn = document.createElement("button");
     addBtn.textContent = "Add Todo";
+    addBtn.classList.add('add-todo-btn');
 
     addBtn.onclick = () => {
         const title = prompt("Title:");
-        const desc = prompt("Description:");
-        const date = prompt("Due Date:");
-        const priority = prompt("Priority (Low, Medium, High):");
+        if (!title) return;
+
+        const desc = prompt("Description:") || '';
+        const date = prompt("Due Date:") || '';
+        const priority = prompt("Priority (Low, Medium, High):") || 'Low';
 
         createTodo(title, desc, date, priority);
         renderApp();
@@ -118,9 +122,10 @@ function renderColumns(project) {
 function createTodoCard(todo) {
     const card = document.createElement("div");
     card.classList.add("card");
+    card.classList.add(`priority-${todo.priority.toLowerCase()}`);
 
-    const title = document.createElement("h4");
-    title.textContent = todo.title;
+    const header = document.createElement('div');
+    header.classList.add('card-header');
 
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
@@ -131,17 +136,88 @@ function createTodoCard(todo) {
         renderApp();
     }
 
+    const title = document.createElement("h4");
+    title.textContent = todo.title;
+
+    const actions = document.createElement('div');
+    actions.classList.add('card-actions');
+
+    const editBtn = document.createElement('button');
+    editBtn.textContent = 'Edit';
+    editBtn.classList.add('edit-btn');
+
+    editBtn.onclick = (e) => {
+        e.stopPropagation();
+
+        const newTitle = prompt('Title:', todo.title);
+        if (!newTitle) return;
+
+        const newDescription = prompt('Description:', todo.description);
+        const newDueDate = prompt('Due Date:', todo.dueDate);
+        const newPriority = prompt(
+            'Priority (Low, Medium, High):',
+            todo.priority
+    );
+
+        updateTodo(
+        todo.id,
+        newTitle,
+        newDescription,
+        newDueDate,
+        newPriority
+        );
+
+        renderApp();
+    };
+
     const deleteBtn = document.createElement("button");
     deleteBtn.textContent = "Delete";
+    deleteBtn.classList.add('delete-btn');
 
-    deleteBtn.onclick = () => {
+    deleteBtn.onclick = (e) => {
+        e.stopPropagation();
         deleteTodo(todo.id);
         renderApp();
     };
 
+    actions.appendChild(editBtn);
+    actions.appendChild(deleteBtn);
+
+    header.appendChild(checkbox);
+    header.appendChild(title);
+    header.appendChild(actions);
+
+    // Meta information
+    const meta = document.createElement('div');
+    meta.classList.add('card-meta');
+
+    const due = document.createElement('span');
+    due.textContent = `📅 ${todo.dueDate || 'No due date'}`;
+
+    const priority = document.createElement('span');
+    priority.classList.add('priority-badge');
+    priority.textContent = todo.priority;
+
+    meta.appendChild(due);
+    meta.appendChild(priority);
+
+    // Expandable details
+    const details = document.createElement('div');
+    details.classList.add('card-details');
+    details.textContent = todo.description || 'No description';
+
+    // Toggle details
+    card.addEventListener('click', () => {
+        details.classList.toggle('show');
+    });
+
     card.appendChild(checkbox);
     card.appendChild(title);
     card.appendChild(deleteBtn);
+    card.appendChild(header);
+    card.appendChild(meta);
+    card.appendChild(details);
+
     return card;
 }
 

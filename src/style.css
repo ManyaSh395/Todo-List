@@ -1,30 +1,42 @@
-
-/* ===== Google Font ===== */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-/* ===== Reset ===== */
+/* =========================
+   Reset
+========================= */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* ===== Body ===== */
 body {
   font-family: 'Inter', sans-serif;
   background: #f8fafc;
   color: #0f172a;
 }
 
-/* ===== App Layout ===== */
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* =========================
+   App Layout
+========================= */
 .container {
   display: flex;
   min-height: 100vh;
 }
 
-/* =======================
+/* =========================
    Sidebar
-======================= */
+========================= */
 .sidebar {
   width: 260px;
   background: #ffffff;
@@ -32,12 +44,13 @@ body {
   padding: 32px 20px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
   box-shadow: 4px 0 12px rgba(15, 23, 42, 0.03);
 }
 
 .sidebar::before {
   content: "TaskFlow";
+  display: block;
   font-size: 1.75rem;
   font-weight: 700;
   color: #3b82f6;
@@ -45,7 +58,6 @@ body {
   padding-left: 4px;
 }
 
-/* Project Buttons */
 .sidebar button {
   width: 100%;
   padding: 14px 16px;
@@ -56,8 +68,7 @@ body {
   font-size: 0.95rem;
   font-weight: 500;
   text-align: left;
-  cursor: pointer;
-  transition: all 0.25s ease;
+  transition: all 0.2s ease;
 }
 
 .sidebar button:hover {
@@ -66,11 +77,11 @@ body {
   transform: translateX(3px);
 }
 
-/* Last button = Add Project */
+/* Add Project button */
 .sidebar button:last-child {
-  margin-top: 16px;
+  margin-top: 12px;
   background: #3b82f6;
-  color: white;
+  color: #ffffff;
   font-weight: 600;
   text-align: center;
   box-shadow: 0 8px 20px rgba(59, 130, 246, 0.25);
@@ -81,16 +92,15 @@ body {
   transform: translateY(-1px);
 }
 
-/* =======================
+/* =========================
    Main Content
-======================= */
+========================= */
 .main {
   flex: 1;
   padding: 40px;
   background: #f8fafc;
 }
 
-/* Project Title */
 .main h2 {
   font-size: 2.25rem;
   font-weight: 700;
@@ -98,9 +108,9 @@ body {
   margin-bottom: 28px;
 }
 
-/* =======================
+/* =========================
    Columns Layout
-======================= */
+========================= */
 .columns {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -108,114 +118,15 @@ body {
   align-items: start;
 }
 
-/* Column Containers */
 .columns > div {
   background: #ffffff;
   border: 1px solid #e2e8f0;
   border-radius: 20px;
   padding: 24px;
   min-height: 420px;
-  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
-}
-
-/* Column Titles */
-.columns h3 {
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin-bottom: 20px;
-  color: #0f172a;
-}
-
-/* =======================
-   Add Todo Button
-======================= */
-.columns button {
-  padding: 10px 18px;
-  border: none;
-  border-radius: 10px;
-  background: #3b82f6;
-  color: white;
-  font-weight: 600;
-  cursor: pointer;
-  margin-bottom: 18px;
-  transition: all 0.2s ease;
-}
-
-.columns button:hover {
-  background: #2563eb;
-}
-
-/* =======================
-   Todo Cards
-======================= */
-.card {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 14px;
-  padding: 16px 18px;
-  margin-bottom: 14px;
-  transition: all 0.2s ease;
-}
-
-.card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.06);
-}
-
-/* Checkbox */
-.card input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
-  accent-color: #22c55e;
-  cursor: pointer;
-  flex-shrink: 0;
-}
-
-/* Todo Title */
-.card h4 {
-  flex: 1;
-  font-size: 1rem;
-  font-weight: 600;
-  color: #1e293b;
-}
-
-/* Delete Button */
-.card button {
-  background: #fee2e2;
-  color: #dc2626;
-  padding: 8px 12px;
-  border-radius: 8px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  border: none;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  margin: 0;
-}
-
-.card button:hover {
-  background: #fecaca;
-}
-
-/* Completed Cards */
-.columns > div:last-child .card {
-  opacity: 0.9;
-}
-
-.columns > div:last-child .card h4 {
-  text-decoration: line-through;
-  color: #64748b;
-}
-
-/* =======================
-   Scroll if Many Todos
-======================= */
-.columns > div {
   max-height: calc(100vh - 180px);
   overflow-y: auto;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
 }
 
 .columns > div::-webkit-scrollbar {
@@ -224,12 +135,176 @@ body {
 
 .columns > div::-webkit-scrollbar-thumb {
   background: #cbd5e1;
-  border-radius: 10px;
+  border-radius: 999px;
 }
 
-/* =======================
+.columns h3 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #0f172a;
+}
+
+/* =========================
+   Add Todo Button
+========================= */
+.columns > div > button,
+.add-todo-btn {
+  width: 100%;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 10px;
+  background: #3b82f6;
+  color: #ffffff;
+  font-weight: 600;
+  margin-top: 8px;
+  transition: background 0.2s ease;
+}
+
+.columns > div > button:hover,
+.add-todo-btn:hover {
+  background: #2563eb;
+}
+
+/* =========================
+   Todo Cards
+========================= */
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-left: 4px solid #94a3b8;
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.06);
+}
+
+/* Priority Colors */
+.priority-high {
+  border-left-color: #ef4444;
+}
+
+.priority-medium {
+  border-left-color: #f59e0b;
+}
+
+.priority-low {
+  border-left-color: #10b981;
+}
+
+/* =========================
+   Card Header
+========================= */
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.card-header input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #22c55e;
+  flex-shrink: 0;
+}
+
+.card-header h4 {
+  flex: 1;
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+/* =========================
+   Card Actions
+========================= */
+.card-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.card-actions button {
+  border: none;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.edit-btn {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+.edit-btn:hover {
+  background: #bfdbfe;
+}
+
+.delete-btn {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.delete-btn:hover {
+  background: #fecaca;
+}
+
+/* =========================
+   Card Meta
+========================= */
+.card-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+.priority-badge {
+  font-weight: 600;
+}
+
+/* =========================
+   Expandable Details
+========================= */
+.card-details {
+  display: none;
+  padding-top: 8px;
+  border-top: 1px solid #e2e8f0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: #475569;
+}
+
+.card-details.show {
+  display: block;
+}
+
+/* =========================
+   Completed Todos
+========================= */
+.columns > div:last-child .card h4 {
+  text-decoration: line-through;
+  color: #64748b;
+}
+
+.columns > div:last-child .card {
+  opacity: 0.9;
+}
+
+/* =========================
    Responsive
-======================= */
+========================= */
 @media (max-width: 900px) {
   .container {
     flex-direction: column;
@@ -241,11 +316,15 @@ body {
     border-bottom: 1px solid #e2e8f0;
   }
 
+  .main {
+    padding: 24px;
+  }
+
   .columns {
     grid-template-columns: 1fr;
   }
 
-  .main {
-    padding: 24px;
+  .columns > div {
+    max-height: none;
   }
 }
