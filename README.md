@@ -65,16 +65,23 @@ Local Storage API
 
 ## How to run locally
 1. Clone the Repository: 
+
 git clone git@github.com:ManyaSh395/Todo-List.git
+
 cd Todo-List
 2. Install Dependencies: 
+
 npm install
 3. Start Development Server: 
+
 npm run start
 4. Open in Browser: 
+
 http://localhost:8080/
-5. Build for Production: 
+5. Build for Production:
+
 npm run build
+
 Webpack generates optimized files inside the dist/ directory.
 
 ## Live Demo
